@@ -1,6 +1,6 @@
 ﻿namespace BANKING_SYSTEM2
 {
-    partial class Form1
+    partial class REGISTER
     {
         /// <summary>
         /// Required designer variable.
