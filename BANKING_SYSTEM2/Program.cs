@@ -16,7 +16,7 @@ namespace BANKING_SYSTEM2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SB_Bank_Main_Page());
+            Application.Run(new Form1());
         }
     }
 }
