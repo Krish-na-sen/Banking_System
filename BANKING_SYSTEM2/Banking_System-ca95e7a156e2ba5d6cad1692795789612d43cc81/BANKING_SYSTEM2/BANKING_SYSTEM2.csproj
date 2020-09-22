@@ -58,6 +58,8 @@
     <Compile Include="Admin_Login.Designer.cs">
       <DependentUpon>Admin_Login.cs</DependentUpon>
     </Compile>
+    <Compile Include="BusinessTier.cs" />
+    <Compile Include="CustomerDAO.cs" />
     <Compile Include="DBAccess.cs" />
     <Compile Include="HomePage.cs">
       <SubType>Form</SubType>
@@ -79,6 +81,7 @@
     <Compile Include="REGISTRATION.Designer.cs">
       <DependentUpon>REGISTRATION.cs</DependentUpon>
     </Compile>
+    <Compile Include="RegistrationData.cs" />
     <Compile Include="SB_BANKDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

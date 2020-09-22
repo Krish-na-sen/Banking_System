@@ -41,37 +41,12 @@ namespace BANKING_SYSTEM2
             connection.Close();
         }
 
-
-        public int executeDataAdapter(DataTable tblName, string strSelectSql)
-        {
-            try
-            {
-                if (connection.State == 0)
-                {
-                    createConn();
-                }
-
-                adapter.SelectCommand.CommandText = strSelectSql;
-                adapter.SelectCommand.CommandType = CommandType.Text;
-                SqlCommandBuilder DbCommandBuilder = new SqlCommandBuilder(adapter);
-
-
-                string insert = DbCommandBuilder.GetInsertCommand().CommandText.ToString();
-                string update = DbCommandBuilder.GetUpdateCommand().CommandText.ToString();
-                string delete = DbCommandBuilder.GetDeleteCommand().CommandText.ToString();
-
-
-                return adapter.Update(tblName);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
+        
 
         public void readDatathroughAdapter(string query, DataTable tblName)
         {
+            DataTable dataTable = new DataTable();
+
             try
             {
                 if (connection.State == ConnectionState.Closed)
@@ -93,30 +68,6 @@ namespace BANKING_SYSTEM2
         }
 
 
-        public SqlDataReader readDatathroughReader(string query)
-        {
-            
-            SqlDataReader reader;
-
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    createConn();
-                }
-
-                command.Connection = connection;
-                command.CommandText = query;
-                command.CommandType = CommandType.Text;
-
-                reader = command.ExecuteReader();
-                return reader;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
 
         public int executeQuery(SqlCommand dbCommand)

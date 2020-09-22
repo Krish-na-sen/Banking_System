@@ -17,6 +17,8 @@ namespace BANKING_SYSTEM2
         DBAccess objDbAccess = new DBAccess();
         DataTable dtCustomer = new DataTable();
         HomePage homepage = new HomePage();
+        internal static object TextBox;
+
         public Login_Page()
         {
             InitializeComponent();

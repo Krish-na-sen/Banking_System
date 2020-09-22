@@ -93,7 +93,7 @@
             // txtDob
             // 
             this.txtDob.CustomFormat = "dd-MM-yyyy";
-            this.txtDob.Location = new System.Drawing.Point(350, 96);
+            this.txtDob.Location = new System.Drawing.Point(365, 96);
             this.txtDob.Name = "txtDob";
             this.txtDob.Size = new System.Drawing.Size(200, 20);
             this.txtDob.TabIndex = 2;
