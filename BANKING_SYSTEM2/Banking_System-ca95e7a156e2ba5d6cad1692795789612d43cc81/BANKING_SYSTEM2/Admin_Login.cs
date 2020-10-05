@@ -7,22 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BusinessLayer;
+using DALayer;
 
 namespace BANKING_SYSTEM2
 {
     public partial class Admin_Login : Form
     {
 
-        DBAccess objDbAccess = new DBAccess();
-        DataTable dtAdmin = new DataTable();
-
+        BALayer objBAL;
+        DBLayer objDAL;
         public Admin_Login()
         {
             InitializeComponent();
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        protected void button1_Click(object sender, EventArgs e)
         {
 
             string adminUsername = txtAdminUsername.Text;
@@ -39,14 +40,14 @@ namespace BANKING_SYSTEM2
 
             else
             {
-                string query = "Select * from  ADMIN_CREDENTIALS where USERNAME='" + adminUsername + "' AND PASSWORD ='" +adminPassword + "'  ";
 
-                objDbAccess.readDatathroughAdapter(query, dtAdmin);
-
-                if (dtAdmin.Rows.Count == 1)
+                objBAL = new BALayer();
+                objDAL = new DBLayer();
+                DataTable dtAdminBA = objBAL.adminLoginBA(txtAdminUsername.Text,txtAdminPassword.Text);
+                if (dtAdminBA.Rows.Count == 1)
                 {
                     MessageBox.Show("Congratulations!!!Logged in successful..");
-                    objDbAccess.closeConn();
+                    objDAL.closeConn();
 
 
                     this.Hide();

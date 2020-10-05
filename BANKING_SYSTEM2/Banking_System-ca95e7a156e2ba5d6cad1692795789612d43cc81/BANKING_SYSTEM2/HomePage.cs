@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using BusinessLayer;
+using DALayer;
 
 
 namespace BANKING_SYSTEM2
@@ -15,13 +17,18 @@ namespace BANKING_SYSTEM2
     public partial class HomePage : Form
 
     {
-        DBAccess objDbAccess = new DBAccess();
+        
+      public static  int CustomerId;
+
+        BALayer objBAL = new BALayer();
+        DBLayer objDAL = new DBLayer();
+
         public HomePage()
         {
             InitializeComponent();
         }
 
-        private void HomePage_Load(object sender, EventArgs e)
+        protected void HomePage_Load(object sender, EventArgs e)
 
         {
 
@@ -48,7 +55,7 @@ namespace BANKING_SYSTEM2
 
 
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        protected void btnUpdate_Click(object sender, EventArgs e)
         {
             string newCustomerNameHome = txtCustomerNameHome.Text;
             string newDobHome = txtDobHome.Text;
@@ -78,24 +85,12 @@ namespace BANKING_SYSTEM2
 
             else
             {
+                objBAL = new BALayer();
+                objDAL = new DBLayer();
 
-                string query = "update CUSTOMER_REGISTRATION1  SET CUSTOMER_NAME ='" +newCustomerNameHome+ "',DOB = '" + newDobHome+ "', AGE = '" +  newAgeHome + "',  GENDER = '" +newGenderHome + "',ADDRESS = '" +  newAddressHome + "', PHONE_NO = '" +  newPhoneNoHome  + "', ACCOUNT_TYPE = '" +newAccountTypeHome + "', ACCOUNT_START_DATE = '" +  newAccountStartDateHome+ "',CITY = '" +  newCityHome + "',  STATE = '" + newStateHome + "',  PINCODE = '" +  newPincodeHome+ "',  PASSWORD = '" +  newPasswordHome+ "' where CUSTOMER_ID = '" + Login_Page.CustomerId+"' ";
-                SqlCommand updateCommand = new SqlCommand(query);
-                updateCommand.Parameters.AddWithValue("@newCustomerNameHome",newCustomerNameHome);
-                updateCommand.Parameters.AddWithValue("@newDobHome",newDobHome);
-                updateCommand.Parameters.AddWithValue("newAgeHome", newAgeHome);
-                updateCommand.Parameters.AddWithValue("newGenderHome", newGenderHome);
-                updateCommand.Parameters.AddWithValue("@newAddressHome", newAddressHome);
-                updateCommand.Parameters.AddWithValue("@newPhoneNoHome", newPhoneNoHome); ;
-                updateCommand.Parameters.AddWithValue("@newAccountTypeHome", newAccountTypeHome);
-                updateCommand.Parameters.AddWithValue("@newAccountStartDateHome", newAccountStartDateHome);
-                updateCommand.Parameters.AddWithValue("@newCityHome", newCityHome);
-                updateCommand.Parameters.AddWithValue("@newStateHome", newStateHome);
-                updateCommand.Parameters.AddWithValue("@newPincodeHome", newPincodeHome);
-                updateCommand.Parameters.AddWithValue("@newPasswordHome", newPasswordHome);
-
-
-                int row = objDbAccess.executeQuery(updateCommand);
+                int row = objBAL.customerUpdateBA(txtCustomerNameHome.Text, txtDobHome.Text, txtAgeHome.Text, txtGenderHome.Text, txtAddressHome.Text,
+               txtPhoneNoHome.Text, txtAccountTypeHome.Text, txtAccountStartDateHome.Text, txtCityHome.Text, txtStateHome.Text, txtPincodeHome.Text, txtPasswordHome.Text, CustomerId);
+                
                 if (row == 1)
                 {
                     MessageBox.Show("Account Details updated successfully");
@@ -115,17 +110,17 @@ namespace BANKING_SYSTEM2
 
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        protected void btnDelete_Click(object sender, EventArgs e)
         {
 
             DialogResult dialog = MessageBox.Show("Are you Sure?", "Delete Account", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
             if(dialog==DialogResult.Yes)
             {
-                string query = "DELETE from CUSTOMER_REGISTRATION1  where CUSTOMER_ID ='"+Login_Page.CustomerId+"'";
-                SqlCommand deleteCommand = new SqlCommand(query);
 
-                int row = objDbAccess.executeQuery(deleteCommand);
+                objBAL = new BALayer();
+                objDAL = new DBLayer();
+                int row = objBAL.customerDeleteBA(CustomerId);
                 if (row == 1)
                 {
                     MessageBox.Show("Account Deleted successfully");

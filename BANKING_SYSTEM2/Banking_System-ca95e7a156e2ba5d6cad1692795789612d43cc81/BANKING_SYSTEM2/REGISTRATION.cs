@@ -8,73 +8,59 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using BusinessLayer;
 
 namespace BANKING_SYSTEM2
 {
     public partial class REGISTRATION : Form
     {
-        RegistrationData regData = new RegistrationData();
 
+        BALayer objBAL;
 
-       DBAccess objDbAccess = new DBAccess();
         public REGISTRATION()
         {
             InitializeComponent();
         }
-        private void REGISTRATION_Load(object sender, EventArgs e)
+        protected void REGISTRATION_Load(object sender, EventArgs e)
         {
-           
 
+            objBAL = new BALayer();
         }
-        
- 
 
 
-        private void button1_Click(object sender, EventArgs e)
+
+        protected void button1_Click(object sender, EventArgs e)
         {
-            regData.CustomerName= txtCustomerName.Text;
-            regData.DOB= txtDob.Text;
-            regData.Age = txtAge.Text;
-            regData.Gender  = txtGender.Text;
-            regData.Address = txtAddress.Text;
-            regData.PhoneNo= txtPhoneNo.Text;
-            regData.AccountType = txtAccountType.Text;
-            regData.AccountStartDate= txtAccountStartDate.Text;
-            regData.City= txtCity.Text;
-            regData.State= txtState.Text;
-            regData.Pincode = txtPincode.Text;
-            regData.Password= txtPassword.Text;
-            
+
+            string customerName = txtCustomerName.Text;
+            string dob = txtDob.Text;
+            string age = txtAge.Text;
+            string gender = txtGender.Text;
+            string address = txtAddress.Text;
+            string phoneNo = txtPhoneNo.Text;
+            string accountType = txtAccountType.Text;
+            string accountStartDate = txtAccountStartDate.Text;
+            string city = txtCity.Text;
+            string state = txtState.Text;
+            string pincode = txtPincode.Text;
+            string password = txtPassword.Text;
 
 
 
-            if ((regData.CustomerName.Equals("")) || (regData.DOB.Equals("")) || (regData.Age.Equals("")) || (regData.Gender.Equals("")) || 
-                (regData.Address.Equals("")) || (regData.PhoneNo.Equals("")) ||
-               (regData.AccountType.Equals("")) || (regData.AccountStartDate.Equals("")) || (regData.City.Equals("")) || (regData.State.Equals("")) || (regData.Pincode.Equals("")) || (regData.Password.Equals("")) )
+
+            if ((customerName.Equals("")) || (dob.Equals("")) || (age.Equals("")) || (gender.Equals("")) || (address.Equals("")) || (phoneNo.Equals("")) ||
+               (accountType.Equals("")) || (accountStartDate.Equals("")) || (city.Equals("")) || (state.Equals("")) || (pincode.Equals("")) || (password.Equals("")))
             {
                 MessageBox.Show("please enter mandatory fields !!!");
             }
 
             else
             {
-                SqlCommand insertCommand = new SqlCommand("insert into CUSTOMER_REGISTRATION1(CUSTOMER_NAME,DOB,AGE,GENDER,ADDRESS,PHONE_NO,ACCOUNT_TYPE,ACCOUNT_START_DATE,CITY,STATE,PINCODE,PASSWORD) values(@customerName,@dob,@age,@gender,@address,@phoneNo,@accountType,@accountStartDate,@city,@state,@pincode,@password)");
+                objBAL = new BALayer();
+                int row = objBAL.customerRegisterBA( txtCustomerName.Text, txtDob.Text,txtAge.Text,txtGender.Text,txtAddress.Text, txtPhoneNo.Text,txtAccountType.Text,
+                txtAccountStartDate.Text, txtCity.Text,txtState.Text, txtPincode.Text, txtPassword.Text);
 
-                insertCommand.Parameters.AddWithValue("@customerName", regData.CustomerName);
-                insertCommand.Parameters.AddWithValue("@dob", regData.DOB);
-                insertCommand.Parameters.AddWithValue("@age", regData.Age);
-                insertCommand.Parameters.AddWithValue("@gender", regData.Gender);
-                insertCommand.Parameters.AddWithValue("@address", regData.Address);
-                insertCommand.Parameters.AddWithValue("@phoneNo", regData.PhoneNo); ;
-                insertCommand.Parameters.AddWithValue("@accountType", regData.AccountType);
-                insertCommand.Parameters.AddWithValue("@accountStartDate", regData.AccountStartDate);
-                insertCommand.Parameters.AddWithValue("@city", regData.City);
-                insertCommand.Parameters.AddWithValue("@state", regData.State);
-                insertCommand.Parameters.AddWithValue("@pincode", regData.Pincode);
-                insertCommand.Parameters.AddWithValue("@password", regData.Password);
-                
-
-                int row = objDbAccess.executeQuery(insertCommand);
-                if (customerDAO.row == 1)
+                if (row == 1)
                 {
                     MessageBox.Show("Account created successfully");
 
@@ -83,7 +69,7 @@ namespace BANKING_SYSTEM2
                     Login_Page login = new Login_Page();
                     login.Show();
 
-                   
+
 
 
                 }
@@ -105,7 +91,7 @@ namespace BANKING_SYSTEM2
 
         }
 
-     
+
     }
 }
 
